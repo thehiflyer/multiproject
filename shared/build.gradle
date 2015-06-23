@@ -1,0 +1,35 @@
+apply plugin: 'java'
+
+sourceSets  {
+	extras {
+		java {
+			srcDir file("$buildDir/extras/java")
+		}
+	}
+}
+
+configurations {
+	extras
+}
+
+task generateExtras(type: Copy) {
+	from "extras"
+	into "$buildDir/extras/java"
+
+	rename { String fileName ->
+		fileName.replace(".extra", ".java")
+	}
+}
+
+compileExtrasJava.dependsOn generateExtras
+
+task jarExtras(type: Jar) {
+	from sourceSets.extras.output
+	baseName = 'extras'
+}
+
+assemble.dependsOn jarExtras
+
+artifacts {
+	extras jarExtras
+}

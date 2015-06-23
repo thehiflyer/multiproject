@@ -1,0 +1,8 @@
+package se.hiflyer.dependencytest;
+
+public class ExtraStuff {
+
+	public String transform(String input) {
+		return input.replace('a', 'e');
+	}
+}
